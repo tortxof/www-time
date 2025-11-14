@@ -39,6 +39,8 @@ body {
   position: fixed;
   top: 1rem;
   right: 1rem;
+  display: flex;
+  align-items: center;
 }
 
 .status-stale {
@@ -47,4 +49,9 @@ body {
 
 .status-synced {
   color: #4caf50;
+}
+
+#time-diff {
+  color: #555;
+  font-size: 0.8rem;
 }
