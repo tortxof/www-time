@@ -6,7 +6,7 @@ var offset = 0;
 function getTime() {
   var requestStartTime = performance.now();
   var requestEndTime;
-  fetch("/time")
+  fetch("https://time.djones.co/time")
     .then((response) => {
       requestEndTime = performance.now();
       return response.json();
