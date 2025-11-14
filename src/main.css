@@ -34,6 +34,17 @@ body {
   font-size: clamp(1rem, 5vw, 7rem);
 }
 
-.hidden {
-  opacity: 0;
+.status {
+  font-size: 2rem;
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+}
+
+.status-stale {
+  color: #ff6347;
+}
+
+.status-synced {
+  color: #4caf50;
 }

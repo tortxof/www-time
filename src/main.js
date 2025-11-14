@@ -1,7 +1,18 @@
 var timeEl = document.getElementById("time");
 var dateEl = document.getElementById("date");
-var localRequestTime;
+var statusEl = document.getElementById("status");
+var localRequestTime = null;
 var offset = 0;
+
+function setStatusColorSynced() {
+  statusEl.classList.add("status-synced");
+  statusEl.classList.remove("status-stale");
+}
+
+function setStatusColorStale() {
+  statusEl.classList.add("status-stale");
+  statusEl.classList.remove("status-synced");
+}
 
 function getTime() {
   var requestStartTime = performance.now();
@@ -15,14 +26,24 @@ function getTime() {
       var oneWayLatency = (requestEndTime - requestStartTime) / 2;
       localRequestTime = requestStartTime + oneWayLatency;
       offset = data[0] - localRequestTime;
-      timeEl.classList.remove("hidden");
-      dateEl.classList.remove("hidden");
+      setStatusColorSynced();
       console.log(getTimeDiff() / 1000);
+    })
+    .catch((error) => {
+      localRequestTime = null;
+      setStatusColorStale();
     });
 }
 
 function isTimeStale() {
-  return performance.now() - localRequestTime > 300000;
+  const isStale =
+    localRequestTime === null || performance.now() - localRequestTime > 300000;
+  if (isStale) {
+    setStatusColorStale();
+  } else {
+    setStatusColorSynced();
+  }
+  return isStale;
 }
 
 function getTimeIfStale() {
