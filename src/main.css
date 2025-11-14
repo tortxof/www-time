@@ -7,8 +7,10 @@
 body {
   background-color: #1a1a1a;
   color: #e0e0e0;
-  font-family: "SF Mono", "Monaco", "Inconsolata", "Fira Code", "Fira Mono",
-    "Roboto Mono", "Courier New", monospace;
+  font-family: "Roboto Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -23,17 +25,11 @@ body {
 }
 
 .time {
-  font-weight: 300;
-  letter-spacing: 0.05em;
-  margin-bottom: 1rem;
   white-space: nowrap;
   font-size: clamp(2rem, 15vw, 20rem);
 }
 
 .date {
-  font-weight: 300;
-  letter-spacing: 0.1em;
-  opacity: 0.8;
   white-space: nowrap;
   font-size: clamp(1rem, 5vw, 7rem);
 }
