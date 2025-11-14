@@ -1,6 +1,7 @@
 var timeEl = document.getElementById("time");
 var dateEl = document.getElementById("date");
 var statusEl = document.getElementById("status");
+var timeDiffEl = document.getElementById("time-diff");
 var localRequestTime = null;
 var offset = 0;
 
@@ -27,7 +28,7 @@ function getTime() {
       localRequestTime = requestStartTime + oneWayLatency;
       offset = data[0] - localRequestTime;
       setStatusColorSynced();
-      console.log(getTimeDiff() / 1000);
+      timeDiffEl.textContent = (getTimeDiff() / 1000).toFixed(3);
     })
     .catch((error) => {
       localRequestTime = null;
