@@ -12,4 +12,4 @@ COPY src/ .
 EXPOSE 3000
 
 # Serve the static files
-CMD ["serve", "-s", ".", "-l", "3000"]
+CMD ["serve", "-l", "3000", "."]
