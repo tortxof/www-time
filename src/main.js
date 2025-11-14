@@ -21,8 +21,12 @@ function getTime() {
     });
 }
 
+function isTimeStale() {
+  return performance.now() - localRequestTime > 300000;
+}
+
 function getTimeIfStale() {
-  if (performance.now() - localRequestTime > 300000) {
+  if (isTimeStale()) {
     getTime();
   }
 }
@@ -38,19 +42,17 @@ function getTimeDiff() {
   return null;
 }
 
-function updateDateTime() {
+function displayDateTime() {
   const now = new Date();
   if (offset !== 0) {
     now.setTime(performance.now() + offset);
   }
 
-  // Format time with seconds
   const hours = String(now.getHours()).padStart(2, "0");
   const minutes = String(now.getMinutes()).padStart(2, "0");
   const seconds = String(now.getSeconds()).padStart(2, "0");
   const timeString = `${hours}:${minutes}:${seconds}`;
 
-  // Format date
   const options = {
     weekday: "long",
     year: "numeric",
@@ -59,13 +61,11 @@ function updateDateTime() {
   };
   const dateString = now.toLocaleDateString("en-US", options);
 
-  // Update DOM
-  document.getElementById("time").textContent = timeString;
-  document.getElementById("date").textContent = dateString;
+  timeEl.textContent = timeString;
+  dateEl.textContent = dateString;
 }
 
-// Update immediately and then every second
-window.setInterval(updateDateTime, 100);
+window.setInterval(displayDateTime, 100);
 window.setTimeout(getTime, 1000);
 window.setInterval(getTimeIfStale, 10000);
 
