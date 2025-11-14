@@ -6,7 +6,7 @@ WORKDIR /app
 RUN npm install -g serve
 
 # Copy your static files
-COPY index.html .
+COPY src/ .
 
 # Expose port
 EXPOSE 3000
