@@ -90,5 +90,3 @@ function displayDateTime() {
 getTime();
 displayDateTime();
 window.setInterval(getTimeIfStale, 1000);
-
-timeEl.addEventListener("click", getTime);
