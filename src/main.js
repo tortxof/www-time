@@ -3,6 +3,7 @@ var dateEl = document.getElementById("date");
 var statusEl = document.getElementById("status");
 var timeDiffEl = document.getElementById("time-diff");
 var localRequestTime = null;
+var offsets = [];
 var offset = 0;
 
 function setStatusColorSynced() {
@@ -26,7 +27,9 @@ function getTime() {
     .then((data) => {
       var oneWayLatency = (requestEndTime - requestStartTime) / 2;
       localRequestTime = requestStartTime + oneWayLatency;
-      offset = data[0] - localRequestTime;
+      offsets.push(data[0] - localRequestTime);
+      offsets = offsets.slice(-6);
+      offset = offsets.reduce((acc, curr) => acc + curr, 0) / offsets.length;
       setStatusColorSynced();
       timeDiffEl.textContent = (getTimeDiff() / 1000).toFixed(3);
     })
@@ -37,14 +40,9 @@ function getTime() {
 }
 
 function isTimeStale() {
-  const isStale =
-    localRequestTime === null || performance.now() - localRequestTime > 300000;
-  if (isStale) {
-    setStatusColorStale();
-  } else {
-    setStatusColorSynced();
-  }
-  return isStale;
+  return (
+    localRequestTime === null || performance.now() - localRequestTime > 10000
+  );
 }
 
 function getTimeIfStale() {
@@ -87,8 +85,8 @@ function displayDateTime() {
   dateEl.textContent = dateString;
 }
 
-window.setInterval(displayDateTime, 100);
-window.setTimeout(getTime, 1000);
-window.setInterval(getTimeIfStale, 10000);
+getTime();
+window.setInterval(displayDateTime, 17);
+window.setInterval(getTimeIfStale, 1000);
 
 timeEl.addEventListener("click", getTime);
