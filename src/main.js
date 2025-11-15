@@ -83,10 +83,12 @@ function displayDateTime() {
 
   timeEl.textContent = timeString;
   dateEl.textContent = dateString;
+
+  window.requestAnimationFrame(displayDateTime);
 }
 
 getTime();
-window.setInterval(displayDateTime, 17);
+displayDateTime();
 window.setInterval(getTimeIfStale, 1000);
 
 timeEl.addEventListener("click", getTime);
