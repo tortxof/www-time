@@ -38,6 +38,21 @@ Key variables:
 - `localRequestTime` - Estimated local time when the server response was
   generated
 
+### Analog Clock (main.js & main.css & index.html)
+
+The application now includes an SVG-based analog clock with the following features:
+
+1. Dynamic hour markers generated with JavaScript on page load
+2. Three separate clock hands (hour, minute, second) with precise rotation calculations
+3. Smooth second hand movement using requestAnimationFrame updates
+4. Responsive design with viewport-based sizing
+5. Visual distinction with a red second hand
+6. Center cap for a finished look
+
+Key functions:
+- `createHourMarkers()` - Dynamically generates the 12 hour markers as SVG lines
+- `updateClockHands(now)` - Calculates and applies rotation to all three clock hands based on current time
+
 ### Display (main.js & main.css)
 
 The time and date are displayed in a responsive layout using:
