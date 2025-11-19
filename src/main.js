@@ -2,6 +2,9 @@ var timeEl = document.getElementById("time");
 var dateEl = document.getElementById("date");
 var statusEl = document.getElementById("status");
 var timeDiffEl = document.getElementById("time-diff");
+var hourHand = document.querySelector(".hour-hand");
+var minuteHand = document.querySelector(".minute-hand");
+var secondHand = document.querySelector(".second-hand");
 
 // This is the estimated local time, as returned by performance.now(), at which
 // the server produced it's response. It is calculated as the time the request
@@ -24,6 +27,59 @@ function setStatusColorSynced() {
 function setStatusColorStale() {
   statusEl.classList.add("status-stale");
   statusEl.classList.remove("status-synced");
+}
+
+// Create hour markers for the analog clock
+function createHourMarkers() {
+  const svg = document.querySelector(".analog-clock");
+  const centerX = 100;
+  const centerY = 100;
+  const radius = 95;
+  const markerLength = 10;
+
+  for (let i = 0; i < 12; i++) {
+    const angle = (i * 30 * Math.PI) / 180; // 30 degrees per hour
+    const x1 = centerX + (radius - markerLength) * Math.sin(angle);
+    const y1 = centerY - (radius - markerLength) * Math.cos(angle);
+    const x2 = centerX + radius * Math.sin(angle);
+    const y2 = centerY - radius * Math.cos(angle);
+
+    const marker = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "line"
+    );
+    marker.setAttribute("class", "marker");
+    marker.setAttribute("x1", x1);
+    marker.setAttribute("y1", y1);
+    marker.setAttribute("x2", x2);
+    marker.setAttribute("y2", y2);
+
+    // Insert before the hands (which are at the end)
+    svg.insertBefore(marker, svg.querySelector(".hour-hand"));
+  }
+}
+
+// Update analog clock hands based on current time
+function updateClockHands(now) {
+  const hours = now.getHours();
+  const minutes = now.getMinutes();
+  const seconds = now.getSeconds();
+  const milliseconds = now.getMilliseconds();
+
+  // Calculate rotations for each hand
+  // Hour hand: 30 degrees per hour + 0.5 degrees per minute
+  const hourRotation = (hours % 12) * 30 + minutes * 0.5;
+
+  // Minute hand: 6 degrees per minute + 0.1 degrees per second
+  const minuteRotation = minutes * 6 + seconds * 0.1;
+
+  // Second hand: 6 degrees per second
+  const secondRotation = seconds * 6;
+
+  // Apply rotations to the hands
+  hourHand.style.transform = `rotate(${hourRotation}deg)`;
+  minuteHand.style.transform = `rotate(${minuteRotation}deg)`;
+  secondHand.style.transform = `rotate(${secondRotation}deg)`;
 }
 
 function getTime() {
@@ -106,9 +162,16 @@ function displayDateTime() {
   timeEl.textContent = timeString;
   dateEl.textContent = dateString;
 
+  // Update analog clock hands
+  updateClockHands(now);
+
   window.requestAnimationFrame(displayDateTime);
 }
 
-getTime();
-displayDateTime();
-window.setInterval(getTimeIfStale, 1000);
+// Initialize everything when the page loads
+document.addEventListener("DOMContentLoaded", function () {
+  createHourMarkers();
+  getTime();
+  displayDateTime();
+  window.setInterval(getTimeIfStale, 1000);
+});

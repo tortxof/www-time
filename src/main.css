@@ -5,8 +5,8 @@
 }
 
 body {
-  background-color: #1a1a1a;
-  color: #e0e0e0;
+  background-color: #111;
+  color: #eee;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,9 +30,11 @@ body {
 }
 
 .container {
-  text-align: center;
   width: 95vw;
   max-width: 95vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .time {
@@ -65,4 +67,52 @@ body {
 #time-diff {
   color: #555;
   font-size: 0.8rem;
+}
+
+.clock-container {
+  display: flex;
+}
+
+.analog-clock {
+  width: 30vh;
+  height: 30vh;
+}
+
+.clock-face {
+  fill: none;
+  stroke: #eee;
+  stroke-width: 2;
+}
+
+.marker {
+  stroke: #eee;
+  stroke-width: 2;
+}
+
+.center-cap {
+  fill: #eee;
+}
+
+.hour-hand {
+  stroke: #eee;
+  stroke-width: 6;
+  stroke-linecap: round;
+  transform-origin: 100px 100px;
+  transform: rotate(0deg);
+}
+
+.minute-hand {
+  stroke: #eee;
+  stroke-width: 4;
+  stroke-linecap: round;
+  transform-origin: 100px 100px;
+  transform: rotate(0deg);
+}
+
+.second-hand {
+  stroke: #f64;
+  stroke-width: 2;
+  stroke-linecap: round;
+  transform-origin: 100px 100px;
+  transform: rotate(0deg);
 }
