@@ -44,7 +44,12 @@ function getTime() {
       offset = offsets.reduce((acc, curr) => acc + curr, 0) / offsets.length;
       setStatusColorSynced();
       // Display the time difference in seconds (local time - server time)
-      timeDiffEl.textContent = (getTimeDiff() / 1000).toFixed(3);
+      const timeDiff = getTimeDiff() / 1000;
+      timeDiffEl.textContent = timeDiff.toLocaleString("en-US", {
+        minimumFractionDigits: 3,
+        maximumFractionDigits: 3,
+        signDisplay: "exceptZero",
+      });
     })
     .catch((error) => {
       localRequestTime = null;
