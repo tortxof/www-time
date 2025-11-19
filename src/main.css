@@ -5,8 +5,8 @@
 }
 
 body {
-  background-color: #1a1a1a;
-  color: #e0e0e0;
+  background-color: #111;
+  color: #eee;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -71,59 +71,49 @@ body {
 }
 
 .clock-container {
-  width: 100%;
-  max-width: 200px;
-  margin: 20px auto;
-  height: 200px;
+  display: flex;
 }
 
 .analog-clock {
-  width: 100%;
-  height: auto;
+  width: 30vh;
+  height: 30vh;
 }
 
 .clock-face {
   fill: none;
-  stroke: #e0e0e0;
+  stroke: #eee;
   stroke-width: 2;
 }
 
 .marker {
-  stroke: #e0e0e0;
+  stroke: #eee;
   stroke-width: 2;
 }
 
-.marker:nth-child(12n+1) {
-  stroke-width: 3;
-}
-
 .center-cap {
-  fill: #e0e0e0;
+  fill: #eee;
 }
 
 .hour-hand {
-  stroke: #e0e0e0;
+  stroke: #eee;
+  stroke-width: 6;
+  stroke-linecap: round;
+  transform-origin: 100px 100px;
+  transform: rotate(0deg);
+}
+
+.minute-hand {
+  stroke: #eee;
   stroke-width: 4;
   stroke-linecap: round;
   transform-origin: 100px 100px;
   transform: rotate(0deg);
-  transition: transform 0.1s ease-out;
-}
-
-.minute-hand {
-  stroke: #e0e0e0;
-  stroke-width: 3;
-  stroke-linecap: round;
-  transform-origin: 100px 100px;
-  transform: rotate(0deg);
-  transition: transform 0.1s ease-out;
 }
 
 .second-hand {
-  stroke: #ff6347;
-  stroke-width: 1;
+  stroke: #f64;
+  stroke-width: 2;
   stroke-linecap: round;
   transform-origin: 100px 100px;
   transform: rotate(0deg);
-  transition: transform 0.05s ease-out;
 }
