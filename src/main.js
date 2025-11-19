@@ -3,6 +3,41 @@ var dateEl = document.getElementById("date");
 var statusEl = document.getElementById("status");
 var timeDiffEl = document.getElementById("time-diff");
 
+// Create hour markers for the analog clock
+function createHourMarkers() {
+  const svg = document.querySelector(".analog-clock");
+  const centerX = 100;
+  const centerY = 100;
+  const radius = 95;
+  const markerLength = 10;
+  
+  for (let i = 0; i < 12; i++) {
+    const angle = (i * 30) * Math.PI / 180; // 30 degrees per hour
+    const x1 = centerX + (radius - markerLength) * Math.sin(angle);
+    const y1 = centerY - (radius - markerLength) * Math.cos(angle);
+    const x2 = centerX + radius * Math.sin(angle);
+    const y2 = centerY - radius * Math.cos(angle);
+    
+    const marker = document.createElementNS("http://www.w3.org/2000/svg", "line");
+    marker.setAttribute("class", "marker");
+    marker.setAttribute("x1", x1);
+    marker.setAttribute("y1", y1);
+    marker.setAttribute("x2", x2);
+    marker.setAttribute("y2", y2);
+    
+    // Insert before the hands (which are at the end)
+    svg.insertBefore(marker, svg.querySelector(".hour-hand"));
+  }
+}
+
+// Initialize everything when the page loads
+document.addEventListener("DOMContentLoaded", function() {
+  createHourMarkers();
+  getTime();
+  displayDateTime();
+  window.setInterval(getTimeIfStale, 1000);
+});
+
 // This is the estimated local time, as returned by performance.now(), at which
 // the server produced it's response. It is calculated as the time the request
 // started plus half of the time that the request/response cycle took to
@@ -109,6 +144,4 @@ function displayDateTime() {
   window.requestAnimationFrame(displayDateTime);
 }
 
-getTime();
-displayDateTime();
-window.setInterval(getTimeIfStale, 1000);
+
