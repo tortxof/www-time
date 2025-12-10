@@ -5,6 +5,7 @@ var timeDiffEl = document.getElementById("time-diff");
 var hourHand = document.querySelector(".hour-hand");
 var minuteHand = document.querySelector(".minute-hand");
 var secondHand = document.querySelector(".second-hand");
+var subsecondHand = document.querySelector(".subsecond-hand");
 
 // Max number of offsets to keep.
 const cache_length = 11;
@@ -62,6 +63,38 @@ function createHourMarkers() {
   }
 }
 
+// Create quarter-second markers for the subsecond clock
+function createQuarterSecondMarkers() {
+  const svg = document.querySelector(".analog-clock");
+  const centerX = 182;
+  const centerY = 182;
+  const radius = 15;
+  const markerLength = 3;
+
+  for (let i = 0; i < 4; i++) {
+    const angle = (i * 90 * Math.PI) / 180; // 90 degrees per quarter
+    const x1 = centerX + (radius - markerLength) * Math.sin(angle);
+    const y1 = centerY - (radius - markerLength) * Math.cos(angle);
+    const x2 = centerX + radius * Math.sin(angle);
+    const y2 = centerY - radius * Math.cos(angle);
+
+    const marker = document.createElementNS(
+      "http://www.w3.org/2000/svg",
+      "line"
+    );
+    marker.setAttribute("class", "subsecond-marker");
+    marker.setAttribute("x1", x1);
+    marker.setAttribute("y1", y1);
+    marker.setAttribute("x2", x2);
+    marker.setAttribute("y2", y2);
+
+    // Insert before the subsecond hand
+    svg
+      .querySelector(".subsecond-hand")
+      .parentNode.insertBefore(marker, svg.querySelector(".subsecond-hand"));
+  }
+}
+
 // Update analog clock hands based on current time
 function updateClockHands(now) {
   const hours = now.getHours();
@@ -83,6 +116,12 @@ function updateClockHands(now) {
   hourHand.style.transform = `rotate(${hourRotation}deg)`;
   minuteHand.style.transform = `rotate(${minuteRotation}deg)`;
   secondHand.style.transform = `rotate(${secondRotation}deg)`;
+
+  // Subsecond hand: 360 degrees per second using milliseconds
+  const subsecondRotation = (milliseconds / 1000) * 360;
+
+  // Apply rotation to subsecond hand
+  subsecondHand.style.transform = `rotate(${subsecondRotation}deg)`;
 }
 
 function getTime() {
@@ -184,6 +223,7 @@ function displayDateTime() {
 // Initialize everything when the page loads
 document.addEventListener("DOMContentLoaded", function () {
   createHourMarkers();
+  createQuarterSecondMarkers();
   getTime();
   displayDateTime();
   window.setInterval(getTimeIfStale, 1000);

@@ -116,3 +116,27 @@ body {
   transform-origin: 100px 100px;
   transform: rotate(0deg);
 }
+
+/* Subsecond clock styles */
+.subsecond-face {
+  fill: none;
+  stroke: #eee;
+  stroke-width: 1;
+}
+
+.subsecond-marker {
+  stroke: #eee;
+  stroke-width: 1;
+}
+
+.subsecond-hand {
+  stroke: #f64;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  transform-origin: 182px 182px;
+  transform: rotate(0deg);
+}
+
+.subsecond-center-cap {
+  fill: #f64;
+}
