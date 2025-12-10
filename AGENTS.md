@@ -77,7 +77,6 @@ Access the application at http://localhost:3000
 
 - Uses vanilla JavaScript (no frameworks)
 - Follows functional programming patterns
-- Uses CSS variables for consistent styling
 - Responsive design with clamp() for font sizing
 - Uses requestAnimationFrame for smooth UI updates
 
