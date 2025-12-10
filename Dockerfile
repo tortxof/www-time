@@ -1,15 +1,15 @@
-FROM node:20-alpine
+FROM oven/bun:1 AS base
 
 WORKDIR /app
 
-# Install serve globally
-RUN npm install -g serve
-
-# Copy your static files
 COPY src/ .
 
-# Expose port
-EXPOSE 3000
+RUN bun build --compile --outfile=server ./index.js
 
-# Serve the static files
-CMD ["serve", "-l", "3000", "."]
+FROM debian:bookworm-slim
+
+WORKDIR /app
+
+COPY --from=base /app/server .
+
+CMD ["./server"]
