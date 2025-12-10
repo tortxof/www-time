@@ -6,6 +6,9 @@ var hourHand = document.querySelector(".hour-hand");
 var minuteHand = document.querySelector(".minute-hand");
 var secondHand = document.querySelector(".second-hand");
 
+// Max number of offsets to keep.
+const cache_length = 11;
+
 // This is the estimated local time, as returned by performance.now(), at which
 // the server produced it's response. It is calculated as the time the request
 // started plus half of the time that the request/response cycle took to
@@ -96,8 +99,18 @@ function getTime() {
       // Calculate the difference between server time and our estimated local
       // time when the server produced its response
       offsets.push(data[0] - localRequestTime);
-      offsets = offsets.slice(-6);
-      offset = offsets.reduce((acc, curr) => acc + curr, 0) / offsets.length;
+      offsets = offsets.slice(-cache_length);
+      // If there is an even number of offsets, don't use the oldest one. We
+      // want an odd number of offsets.
+      var offsets_for_median;
+      if (offsets.length % 2 == 0) {
+        offsets_for_median = offsets.slice(1);
+      } else {
+        offsets_for_median = offsets.slice();
+      }
+      offset = offsets_for_median.sort((a, b) => a - b)[
+        Math.floor(offsets_for_median.length / 2)
+      ];
       setStatusColorSynced();
       // Display the time difference in seconds (local time - server time)
       const timeDiff = getTimeDiff() / 1000;
