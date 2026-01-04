@@ -50,7 +50,7 @@ function createHourMarkers() {
 
     const marker = document.createElementNS(
       "http://www.w3.org/2000/svg",
-      "line"
+      "line",
     );
     marker.setAttribute("class", "marker");
     marker.setAttribute("x1", x1);
@@ -80,7 +80,7 @@ function createQuarterSecondMarkers() {
 
     const marker = document.createElementNS(
       "http://www.w3.org/2000/svg",
-      "line"
+      "line",
     );
     marker.setAttribute("class", "subsecond-marker");
     marker.setAttribute("x1", x1);
