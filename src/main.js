@@ -95,6 +95,10 @@ function createQuarterSecondMarkers() {
   }
 }
 
+const hourHandDegreesPerHour = 360 / 12;
+const hourHandDegreesPerMinute = 360 / (12 * 60);
+const hourHandDegreesPerSecond = 360 / (12 * 60 * 60);
+
 // Update analog clock hands based on current time
 function updateClockHands(now) {
   const hours = now.getHours();
@@ -104,7 +108,10 @@ function updateClockHands(now) {
 
   // Calculate rotations for each hand
   // Hour hand: 30 degrees per hour + 0.5 degrees per minute
-  const hourRotation = (hours % 12) * 30 + minutes * 0.5;
+  const hourRotation =
+    (hours % 12) * hourHandDegreesPerHour +
+    minutes * hourHandDegreesPerMinute +
+    seconds * hourHandDegreesPerSecond;
 
   // Minute hand: 6 degrees per minute + 0.1 degrees per second
   const minuteRotation = minutes * 6 + seconds * 0.1;
