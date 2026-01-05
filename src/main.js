@@ -33,6 +33,8 @@ var currentOffset = 0;
 var offsetChangeTimestamp = null;
 var nextOffset = null;
 
+var lastMillis = 999;
+
 function setStatusColorSynced() {
   statusEl.classList.add("status-synced");
   statusEl.classList.remove("status-stale");
@@ -114,7 +116,6 @@ function updateClockHands(now) {
   const hours = now.getHours();
   const minutes = now.getMinutes();
   const seconds = now.getSeconds();
-  const milliseconds = now.getMilliseconds();
 
   // Calculate rotations for each hand
   // Hour hand: 30 degrees per hour + 0.5 degrees per minute
@@ -133,10 +134,12 @@ function updateClockHands(now) {
   hourHand.style.transform = `rotate(${hourRotation}deg)`;
   minuteHand.style.transform = `rotate(${minuteRotation}deg)`;
   secondHand.style.transform = `rotate(${secondRotation}deg)`;
+}
 
+function updateSubsecondHand(now) {
+  const milliseconds = now.getMilliseconds();
   // Subsecond hand: 360 degrees per second using milliseconds
   const subsecondRotation = (milliseconds / 1000) * 360;
-
   // Apply rotation to subsecond hand
   subsecondHand.style.transform = `rotate(${subsecondRotation}deg)`;
 }
@@ -257,25 +260,28 @@ function displayDateTime() {
     now.setTime(performance.now() + offset);
   }
 
-  const hours = String(now.getHours()).padStart(2, "0");
-  const minutes = String(now.getMinutes()).padStart(2, "0");
-  const seconds = String(now.getSeconds()).padStart(2, "0");
-  const timeString = `${hours}:${minutes}:${seconds}`;
+  updateSubsecondHand(now);
 
-  const options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-  const dateString = now.toLocaleDateString("en-US", options);
+  const milliseconds = now.getMilliseconds();
 
-  timeEl.textContent = timeString;
-  dateEl.textContent = dateString;
-  messageEl.innerHTML = getMessage(now);
+  if (milliseconds < lastMillis) {
+    const hours = String(now.getHours()).padStart(2, "0");
+    const minutes = String(now.getMinutes()).padStart(2, "0");
+    const seconds = String(now.getSeconds()).padStart(2, "0");
+    const timeString = `${hours}:${minutes}:${seconds}`;
+    const dateString = now.toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+    timeEl.textContent = timeString;
+    dateEl.textContent = dateString;
+    messageEl.innerHTML = getMessage(now);
+    updateClockHands(now);
+  }
 
-  // Update analog clock hands
-  updateClockHands(now);
+  lastMillis = milliseconds;
 
   window.requestAnimationFrame(displayDateTime);
 }
