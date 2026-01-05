@@ -1,3 +1,8 @@
+const timeOrigin =
+  window.location.hostname === "localhost"
+    ? "http://localhost:8080"
+    : "https://time.djones.co";
+
 var timeEl = document.getElementById("time");
 var dateEl = document.getElementById("date");
 var statusEl = document.getElementById("status");
@@ -134,7 +139,9 @@ function updateClockHands(now) {
 function getTime() {
   var requestStartTime = performance.now();
   var requestEndTime;
-  fetch("https://time.djones.co/time")
+  fetch(`${timeOrigin}/time`, {
+    headers: { "X-Timezone": Intl.DateTimeFormat().resolvedOptions().timeZone },
+  })
     .then((response) => {
       requestEndTime = performance.now();
       return response.json();
