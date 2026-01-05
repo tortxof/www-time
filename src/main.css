@@ -49,6 +49,12 @@ body {
     font-size: clamp(1rem, 10vh, 7vw);
 }
 
+.message {
+    margin: 1rem 0;
+    max-width: 95vw;
+    white-space: nowrap;
+}
+
 .status {
     font-size: 2rem;
     position: fixed;

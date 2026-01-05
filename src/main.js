@@ -5,6 +5,7 @@ const timeOrigin =
 
 var timeEl = document.getElementById("time");
 var dateEl = document.getElementById("date");
+var messageEl = document.getElementById("message");
 var statusEl = document.getElementById("status");
 var timeDiffEl = document.getElementById("time-diff");
 var hourHand = document.querySelector(".hour-hand");
@@ -27,6 +28,10 @@ var localRequestTime = null;
 // the response was produced.
 var offsets = [];
 var offset = 0;
+
+var currentOffset = 0;
+var offsetChangeTimestamp = null;
+var nextOffset = null;
 
 function setStatusColorSynced() {
   statusEl.classList.add("status-synced");
@@ -136,6 +141,43 @@ function updateClockHands(now) {
   subsecondHand.style.transform = `rotate(${subsecondRotation}deg)`;
 }
 
+function humanizeDuration(seconds) {
+  // 1209600 two weeks
+  if (seconds > 1209600) {
+    return `${Math.round(seconds / 604800)} weeks`;
+  }
+  // 172800 two days
+  if (seconds > 172800) {
+    return `${Math.round(seconds / 86400)} days`;
+  }
+  // 7200 two hours
+  if (seconds > 7200) {
+    return `${Math.round(seconds / 3600)} hours`;
+  }
+  // 120 two minutes
+  if (seconds > 120) {
+    return `${Math.round(seconds / 60)} minutes`;
+  }
+  return `${seconds} seconds`;
+}
+
+function getMessage(now) {
+  var nowTime = now.getTime();
+  if (
+    offsetChangeTimestamp !== null &&
+    nextOffset !== null &&
+    offsetChangeTimestamp > nowTime
+  ) {
+    var timeAction =
+      currentOffset < nextOffset ? "springs forward" : "falls back";
+    var durationStr = humanizeDuration(
+      Math.ceil((offsetChangeTimestamp - nowTime) / 1000),
+    );
+    return `time ${timeAction} in ${durationStr}`;
+  }
+  return "&nbsp;";
+}
+
 function getTime() {
   var requestStartTime = performance.now();
   var requestEndTime;
@@ -172,6 +214,9 @@ function getTime() {
         maximumFractionDigits: 3,
         signDisplay: "exceptZero",
       });
+      currentOffset = data[1];
+      offsetChangeTimestamp = data[2];
+      nextOffset = data[3];
     })
     .catch((error) => {
       localRequestTime = null;
@@ -227,6 +272,7 @@ function displayDateTime() {
 
   timeEl.textContent = timeString;
   dateEl.textContent = dateString;
+  messageEl.innerHTML = getMessage(now);
 
   // Update analog clock hands
   updateClockHands(now);
