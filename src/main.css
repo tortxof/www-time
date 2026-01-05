@@ -1,142 +1,144 @@
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-  background-color: #111;
-  color: #eee;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  overflow: hidden;
+    background-color: #111;
+    color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
 }
 
 .roboto {
-  font-family: "Roboto", sans-serif;
-  font-optical-sizing: auto;
-  font-weight: 600;
-  font-style: normal;
-  font-variation-settings: "wdth" 100;
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
 }
 
 .roboto-mono {
-  font-family: "Roboto Mono", monospace;
-  font-optical-sizing: auto;
-  font-weight: 700;
-  font-style: normal;
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
 }
 
 .container {
-  width: 95vw;
-  max-width: 95vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+    width: 95vw;
+    max-width: 95vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .time {
-  white-space: nowrap;
-  font-size: clamp(2rem, 15vw, 20rem);
+    max-width: 95vw;
+    white-space: nowrap;
+    font-size: clamp(1rem, 20vh, 15vw);
 }
 
 .date {
-  white-space: nowrap;
-  font-size: clamp(1rem, 5vw, 7rem);
+    max-width: 95vw;
+    white-space: nowrap;
+    font-size: clamp(1rem, 10vh, 7vw);
 }
 
 .status {
-  font-size: 2rem;
-  position: fixed;
-  top: 1rem;
-  right: 1rem;
-  display: flex;
-  align-items: center;
+    font-size: 2rem;
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    display: flex;
+    align-items: center;
 }
 
 .status-stale {
-  color: #ff6347;
+    color: #ff6347;
 }
 
 .status-synced {
-  color: #4caf50;
+    color: #4caf50;
 }
 
 #time-diff {
-  color: #555;
-  font-size: 0.8rem;
+    color: #555;
+    font-size: 0.8rem;
 }
 
 .clock-container {
-  display: flex;
+    display: flex;
 }
 
 .analog-clock {
-  width: 30vh;
-  height: 30vh;
+    width: clamp(120px, 50vh, 50vw);
+    height: clamp(120px, 50vh, 50vw);
 }
 
 .clock-face {
-  fill: none;
-  stroke: #eee;
-  stroke-width: 2;
+    fill: none;
+    stroke: #eee;
+    stroke-width: 2;
 }
 
 .marker {
-  stroke: #eee;
-  stroke-width: 2;
+    stroke: #eee;
+    stroke-width: 2;
 }
 
 .center-cap {
-  fill: #eee;
+    fill: #eee;
 }
 
 .hour-hand {
-  stroke: #eee;
-  stroke-width: 6;
-  stroke-linecap: round;
-  transform-origin: 100px 100px;
-  transform: rotate(0deg);
+    stroke: #eee;
+    stroke-width: 6;
+    stroke-linecap: round;
+    transform-origin: 100px 100px;
+    transform: rotate(0deg);
 }
 
 .minute-hand {
-  stroke: #eee;
-  stroke-width: 4;
-  stroke-linecap: round;
-  transform-origin: 100px 100px;
-  transform: rotate(0deg);
+    stroke: #eee;
+    stroke-width: 4;
+    stroke-linecap: round;
+    transform-origin: 100px 100px;
+    transform: rotate(0deg);
 }
 
 .second-hand {
-  stroke: #f64;
-  stroke-width: 2;
-  stroke-linecap: round;
-  transform-origin: 100px 100px;
-  transform: rotate(0deg);
+    stroke: #f64;
+    stroke-width: 2;
+    stroke-linecap: round;
+    transform-origin: 100px 100px;
+    transform: rotate(0deg);
 }
 
 /* Subsecond clock styles */
 .subsecond-face {
-  fill: none;
-  stroke: #eee;
-  stroke-width: 1;
+    fill: none;
+    stroke: #eee;
+    stroke-width: 1;
 }
 
 .subsecond-marker {
-  stroke: #eee;
-  stroke-width: 1;
+    stroke: #eee;
+    stroke-width: 1;
 }
 
 .subsecond-hand {
-  stroke: #f64;
-  stroke-width: 1.5;
-  stroke-linecap: round;
-  transform-origin: 182px 182px;
-  transform: rotate(0deg);
+    stroke: #f64;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    transform-origin: 182px 182px;
+    transform: rotate(0deg);
 }
 
 .subsecond-center-cap {
-  fill: #f64;
+    fill: #f64;
 }
