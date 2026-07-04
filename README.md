@@ -5,7 +5,7 @@ remote server so it remains accurate even when the local system clock drifts or
 is misconfigured. It renders both digital and analog clocks, highlights offset
 information, and displays upcoming clock changes. The frontend is framework-free
 vanilla HTML/CSS/JS and can be deployed as a static asset bundle or inside the
-provided Bun-based Docker image.
+provided Deno-based Docker image.
 
 ## Features
 
@@ -37,14 +37,15 @@ provided Bun-based Docker image.
   targets `http://localhost:8080/time`. Otherwise it defaults to
   `https://time.djones.co/time`.
 
-- **Optional Bun server** (`src/index.js` + `Dockerfile`): Builds to a
+- **Optional Deno server** (`src/index.js` + `Dockerfile`): Builds to a
   standalone binary that serves the static files without needing Node or npm in
   production.
 
 ## Prerequisites
 
-- JavaScript runtime. Bun is preferred. Serve `/src` with any HTTP server, or
-  run `bun run src/index.js`.
+- JavaScript runtime. Deno is preferred. Serve `/src` with any HTTP server, or
+  run `deno task start` (equivalently `deno run --allow-net --allow-read
+  src/index.js`).
 
 - The [gotime](https://github.com/tortxof/gotime) backend running locally on
   port `8080` for development.
@@ -66,7 +67,7 @@ provided Bun-based Docker image.
 2. In another terminal, serve this frontend:
 
   ```bash
-  bun run src/index.js
+  deno task start
   ```
 
 3. Visit `http://localhost:3000` (or the port reported by your server of
@@ -83,7 +84,7 @@ or adjust `timeOrigin` in `main.js` if you host your own backend.
 
 ### Docker image
 
-A multi-stage Docker build compiles the Bun server and ships a single binary:
+A multi-stage Docker build compiles the Deno server and ships a single binary:
 
 ```bash
 docker build -t www-time .

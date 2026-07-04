@@ -8,12 +8,15 @@ codebase.
 This is a simple web application that displays synchronized time from a remote
 server so the UI stays accurate even when the local system clock is wrong. The
 frontend is built with vanilla HTML, CSS, and JavaScript, and served using a
-Node.js Docker container.
+Deno Docker container.
 
 ## Codebase Structure
 
 - `Dockerfile` - Defines the container image for serving the application
+- `deno.json` - Deno configuration: `dev`, `start`, and `compile` tasks plus
+  required permissions
 - `src/` - Contains all frontend source files
+  - `index.js` - Deno static file server that hosts the frontend on port 3000
   - `index.html` - Main HTML structure
   - `main.css` - Styling for the application
   - `main.js` - JavaScript logic for time synchronization and display
@@ -76,15 +79,16 @@ Status indicators show whether the time is synchronized (green) or stale (red).
    serves `http://localhost:8080/time` (the frontend assumes this when loaded
    from `localhost`).
 
-2. Prefer Bun for local development. From the repo root run:
+2. Prefer Deno for local development. From the repo root run:
 
 ```
-bun run src/index.js
+deno task start
 ```
 
-   This Bun entry bundles the static assets and serves them on port 3000.
+   This Deno entry serves the static assets on port 3000. Use `deno task dev`
+   for watch mode.
 
-3. Alternatively, any static server that can host `src/` will work, but Bun is
+3. Alternatively, any static server that can host `src/` will work, but Deno is
    the default tooling for this repository.
 
 Access the application at http://localhost:3000
@@ -110,7 +114,7 @@ Manual testing is recommended:
 ## Deployment
 
 The application is designed to be deployed as a Docker container. The current
-multi-stage Dockerfile compiles the Bun server into a single binary and runs it
+multi-stage Dockerfile compiles the Deno server into a single binary and runs it
 inside a slim Debian image.
 
 ## Gotchas

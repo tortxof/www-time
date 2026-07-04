@@ -1,0 +1,7 @@
+{
+  "tasks": {
+    "dev": "deno run --allow-net --allow-read --watch src/index.js",
+    "start": "deno run --allow-net --allow-read src/index.js",
+    "compile": "deno compile --allow-net --include ./src/ --output server ./src/index.js"
+  }
+}

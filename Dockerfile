@@ -1,10 +1,10 @@
-FROM oven/bun:1 AS base
+FROM denoland/deno:2.9.1 AS base
 
 WORKDIR /app
 
-COPY src/ .
+COPY src/ ./src/
 
-RUN bun build --compile --outfile=server ./index.js
+RUN deno compile --allow-net --include ./src/ --output server ./src/index.js
 
 FROM debian:bookworm-slim
 
